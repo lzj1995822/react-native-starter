@@ -61,7 +61,7 @@ export default createBottomTabNavigator(
     Home: {
       screen: HomeScreen,
       navigationOptions: {
-        header: null,
+        headerTitle: "Main",
       },
     },
     Calendar: {
@@ -145,6 +145,7 @@ export default createBottomTabNavigator(
         );
       },
     }),
+      initialRouteName: 'Home',
     tabBarPosition: 'bottom',
     animationEnabled: false,
     swipeEnabled: false,

@@ -4,6 +4,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Agenda } from 'react-native-calendars';
 
 import { colors, fonts } from '../../styles';
+import style from "../../views/styles/common";
 
 class CalendarScreen extends React.Component {
   rowHasChanged(r1, r2) {
@@ -36,6 +37,7 @@ class CalendarScreen extends React.Component {
       ));
 
     return (
+
       <View style={styles.item}>
         <View>
           <Text
@@ -59,23 +61,25 @@ class CalendarScreen extends React.Component {
 
   render() {
     const { items, loadItems } = this.props;
-    return (
-      <Agenda
-        items={items}
-        loadItemsForMonth={loadItems}
-        renderItem={this.renderItem}
-        renderEmptyDate={this.renderEmptyDate}
-        rowHasChanged={this.rowHasChanged}
-        theme={{
-          dotColor: colors.primaryLight,
-          selectedDayBackgroundColor: colors.primaryLight,
-          agendaDayTextColor: colors.primaryLight,
-          agendaDayNumColor: colors.primaryLight,
-          agendaTodayColor: '#4F44B6',
-          backgroundColor: '#F1F1F8',
-        }}
-      />
-    );
+    return [
+            <Text style={style.header}>工作台账</Text>,
+            <Agenda
+                items={items}
+                loadItemsForMonth={loadItems}
+                renderItem={this.renderItem}
+                renderEmptyDate={this.renderEmptyDate}
+                rowHasChanged={this.rowHasChanged}
+                theme={{
+                    dotColor: colors.primaryLight,
+                    selectedDayBackgroundColor: colors.primaryLight,
+                    agendaDayTextColor: colors.primaryLight,
+                    agendaDayNumColor: colors.primaryLight,
+                    agendaTodayColor: '#4F44B6',
+                    backgroundColor: '#F1F1F8',
+                }}
+            />
+      ]
+    ;
   }
 }
 

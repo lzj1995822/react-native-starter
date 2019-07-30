@@ -1,7 +1,8 @@
 import React from 'react';
 
 import Navigator from './navigation/Navigator';
+import Stack from './test/Navigator';
 
 export default function AppView() {
-  return <Navigator onNavigationStateChange={() => {}} uriPrefix="/app" />;
+  return <Stack />;
 }

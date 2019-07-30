@@ -16,6 +16,7 @@
     "e2e:test": "detox test --configuration ios.sim.debug"
   },
   "dependencies": {
+    "beeshell": "^2.0.11",
     "i18n-js": "^3.2.1",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
@@ -25,15 +26,15 @@
     "react-native-gesture-handler": "^1.0.16",
     "react-native-gifted-chat": "^0.7.2",
     "react-native-lightbox": "^0.8.0",
-    "react-native-linear-gradient": "^2.5.3",
+    "react-native-linear-gradient": "^2.5.6",
     "react-native-localize": "^1.0.4",
     "react-native-modal": "^9.0.0",
     "react-native-modal-datetime-picker": "^6.0.0",
     "react-native-modal-dropdown": "^0.6.2",
     "react-native-paper": "^2.12.0",
     "react-native-ui-lib": "^3.18.0",
-    "react-native-vector-icons": "^6.3.0",
-    "react-navigation": "^3.3.2",
+    "react-native-vector-icons": "^6.6.0",
+    "react-navigation": "3.0.0",
     "react-navigation-header-buttons": "^2.1.2",
     "react-navigation-material-bottom-tabs": "^1.0.0",
     "react-redux": "^6.0.1",
@@ -46,8 +47,8 @@
     "victory-native": "^31.0.0"
   },
   "devDependencies": {
-    "@babel/preset-flow": "^7.0.0",
     "@babel/core": "^7.3.4",
+    "@babel/preset-flow": "^7.0.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.5.0",
     "danger": "^7.0.2",
