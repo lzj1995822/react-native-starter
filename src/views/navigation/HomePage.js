@@ -8,9 +8,8 @@ export default class HomePage extends React.Component {
     render() {
         return (
             <View>
-                    <Text style={style.header}>首页</Text>
-                <LinearGradient color={color.headerColors} start={{ x: 0, y: 0 }}
-                                end={{ x: 0, y: 1 }} locations={[0, 0.75]} >
+                <LinearGradient colors={color.headerColors} locations={[ 0.1, 0.7, 1 ]} start={{ x : 0.0, y : 1.0 }} end={{ x : 1.0, y : 1.0 }}>
+                  <Text style={style.header}>首页</Text>
                 </LinearGradient>
                 <Button title={'基本活动'} onPress={() => this.props.navigation.navigate("Activity")}>基本活动</Button>
             </View>

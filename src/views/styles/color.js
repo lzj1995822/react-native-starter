@@ -1,3 +1,3 @@
 export default {
-    headerColors: ['#00B4DB', '#0083B0']
+    headerColors: ['#00B4DB', '#409eff', '#00B4DB']
 }

@@ -5,6 +5,8 @@ import { Agenda } from 'react-native-calendars';
 
 import { colors, fonts } from '../../styles';
 import style from "../../views/styles/common";
+import color from '../../views/styles/color';
+import LinearGradient from "react-native-linear-gradient";
 
 class CalendarScreen extends React.Component {
   rowHasChanged(r1, r2) {
@@ -62,7 +64,9 @@ class CalendarScreen extends React.Component {
   render() {
     const { items, loadItems } = this.props;
     return [
-            <Text style={style.header}>工作台账</Text>,
+            <LinearGradient colors={color.headerColors} locations={[ 0.1, 0.7, 1 ]} start={{ x : 0.0, y : 1.0 }} end={{ x : 1.0, y : 1.0 }}>
+              <Text style={style.header}>工作台账</Text>
+            </LinearGradient>,
             <Agenda
                 items={items}
                 loadItemsForMonth={loadItems}

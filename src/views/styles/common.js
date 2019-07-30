@@ -8,7 +8,7 @@ const style = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
         fontWeight: '400',
-        backgroundColor: '#409eff'
+        backgroundColor: 'transparent'
     }
 });
 export default style;
