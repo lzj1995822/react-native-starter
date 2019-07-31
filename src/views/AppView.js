@@ -12,6 +12,7 @@ import Mine from "./user/Mine";
 import Calendar from "../modules/calendar/CalendarView";
 import Activity from './activity/Activity';
 import Login from './Login';
+import Cal from './cal/Cal';
 import { View } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
@@ -54,6 +55,12 @@ const tab = createBottomTabNavigator({
             tabBarLabel: "台账"
         })
     },
+    Cal: {
+        screen: Cal,
+        navigationOptions: ({ navigation }) => ({
+            tabBarLabel: "统计"
+        })
+    },
     Mine: {
         screen: Mine,
         navigationOptions: ({ navigation }) => ({
@@ -71,6 +78,9 @@ const tab = createBottomTabNavigator({
                     break;
                 case 'Calendar':
                     iconSource = 'calendar';
+                    break;
+                case 'Cal':
+                    iconSource = 'linechart';
                     break;
                 case 'Mine':
                     iconSource = 'user';
