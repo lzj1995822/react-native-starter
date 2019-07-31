@@ -170,13 +170,13 @@ export default class HomePage extends React.Component {
                     </Carousel>
                     {/*按钮集合展示区*/}
                     <Flex justify="between" align="center" style={styleScope.btnList}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("Activity")}>
+                        <TouchableOpacity  onPress={() => this.props.navigation.navigate("Activity")}>
                             <View style={{textAlign: 'center'}}>
                                 <Image source={require('../../../assets/images/inactive/activity.png')} style={styleScope.listImage}/>
                                 <Text style={styleScope.btnLabel}>活动管理</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("Activity")}>
+                        <TouchableOpacity onPress={() => {console.log(this.props.navigation);this.props.navigation.navigate("Activity")}}>
                             <View style={{textAlign: 'center'}}>
                                 <Image source={require('../../../assets/images/inactive/position.png')} style={styleScope.listImage}/>
                                 <Text style={styleScope.btnLabel}>阵地展示</Text>

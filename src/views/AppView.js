@@ -16,6 +16,8 @@ import Cal from './cal/Cal';
 import { View } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
+import NavigationUtils from './navigation/NavigationUtils';
+
 const stack = createStackNavigator({
     WelcomePage: {
         screen: WelcomePage,
