@@ -2,11 +2,11 @@ import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { StyleSheet, View, Text, Button, TouchableOpacity, Image, ScrollView, ImageBackground} from "react-native";
 import { Flex, Carousel, List, NoticeBar, SearchBar } from '@ant-design/react-native';
+import NavigationBar from '../navigation/NavigationBar';
 const Item = List.Item;
 const Brief = Item.Brief;
 
 import style from '../styles/common';
-import color from '../styles/color';
 const styleScope = StyleSheet.create({
     listImage: {
         width: 50,
@@ -56,6 +56,9 @@ const carouselStyles = StyleSheet.create({
         fontSize: 36,
     },
 });
+
+const THEME_COLOR = '#3394fd';
+
 export default class HomePage extends React.Component {
 
     constructor(props) {
@@ -119,11 +122,14 @@ export default class HomePage extends React.Component {
         return <List renderHeader={'党建新闻'}>{newsItems}</List>
     }
     render() {
+        let statusBar = {
+            backgroundColor: THEME_COLOR,
+            barStyle: 'light-content'
+        }
+        let navigationBar = <NavigationBar linerGradient={true} title={'首页'} statusBar={statusBar} style={{backgroundColor: THEME_COLOR}}></NavigationBar>
         return (
             <View style={{flex: 1, backgroundColor: 'rgb(245, 245, 249)'}}>
-                <LinearGradient colors={color.headerColors} locations={[ 0.1, 0.7, 1 ]} start={{ x : 0.0, y : 1.0 }} end={{ x : 1.0, y : 1.0 }}>
-                    <Text style={style.header}>首页</Text>
-                </LinearGradient>
+                {navigationBar}
                 <SearchBar style={{backgroundColor: 'white'}} defaultValue="" placeholder="搜索" />
 
                 <ScrollView
