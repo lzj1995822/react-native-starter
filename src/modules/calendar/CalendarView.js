@@ -4,9 +4,9 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Agenda } from 'react-native-calendars';
 
 import { colors, fonts } from '../../styles';
-import style from "../../views/styles/common";
 import color from '../../views/styles/color';
-import LinearGradient from "react-native-linear-gradient";
+import NavigationBar from "../../views/navigation/NavigationBar";
+const THEME_COLOR = color.THEME_COLOR;
 
 class CalendarScreen extends React.Component {
   rowHasChanged(r1, r2) {
@@ -63,10 +63,13 @@ class CalendarScreen extends React.Component {
 
   render() {
     const { items, loadItems } = this.props;
+      let statusBar = {
+          backgroundColor: THEME_COLOR,
+          barStyle: 'light-content'
+      };
+      let navigationBar = <NavigationBar linerGradient={true} title='工作台账' statusBar={statusBar} style={{backgroundColor: THEME_COLOR}}/>;
     return [
-            <LinearGradient colors={color.headerColors} locations={[ 0.1, 0.7, 1 ]} start={{ x : 0.0, y : 1.0 }} end={{ x : 1.0, y : 1.0 }}>
-              <Text style={style.header}>工作台账</Text>
-            </LinearGradient>,
+            <View>{navigationBar}</View>,
             <Agenda
                 items={items}
                 loadItemsForMonth={loadItems}

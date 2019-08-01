@@ -11,7 +11,7 @@ const StatusBarShape = {
     barStyle: PropTypes.oneOf(['light-content', 'default']),
     hidden: PropTypes.bool,
     backgroundColor: PropTypes.string
-}
+};
 
 export default class NavigationBar extends  React.Component{
 
@@ -26,14 +26,14 @@ export default class NavigationBar extends  React.Component{
         leftButton: PropTypes.element,
         linerGradient: PropTypes.bool,
         colors: PropTypes.array
-    }
+    };
 
     static defaultProps = {
         statusBar: {
             barStyle: 'light-content',
             hidden: false
         }
-    }
+    };
 
     render() {
         let statusBar = !this.props.statusBar.hidden ?
@@ -76,7 +76,7 @@ export default class NavigationBar extends  React.Component{
 }
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'blue'
+        backgroundColor: color.THEME_COLOR
     },
     navBar: {
         flexDirection: 'row',
@@ -94,7 +94,9 @@ const styles = StyleSheet.create({
         bottom: 0
     },
     navBarButton: {
-        alignItems: 'center'
+        alignItems: 'center',
+        width: 55,
+        overflow: 'hidden'
     },
     title: {
         fontSize: 20,

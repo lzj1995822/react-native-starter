@@ -3,10 +3,15 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StyleSheet, View, Text, Button, TouchableOpacity, Image, ScrollView, ImageBackground} from "react-native";
 import { Flex, Carousel, List, NoticeBar, SearchBar } from '@ant-design/react-native';
 import NavigationBar from '../navigation/NavigationBar';
+import NavigationUtils from '../navigation/NavigationUtils';
 const Item = List.Item;
 const Brief = Item.Brief;
 
 import style from '../styles/common';
+import color from '../styles/color';
+const THEME_COLOR = color.THEME_COLOR;
+
+const token = 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhZDFmMDdmYy1iZWIzLTQxZWQtODE3My0xNTE0Y2E0NjkxYWIiLCJpYXQiOjE1NjQ2Mzk5NTIsImlzcyI6Ind3dy5jbG91ZGtlZXBlci5jb20iLCJzdWIiOiJzZXJ2aWNlQGNsb3Vka2VlcGVyLmNuIiwiZXhwIjoxNTY0Njc1OTUyfQ.OlesT7tsJEcgpcGuzVArEpOO6r42dsSlePG9nunmt3k';
 const styleScope = StyleSheet.create({
     listImage: {
         width: 50,
@@ -57,7 +62,6 @@ const carouselStyles = StyleSheet.create({
     },
 });
 
-const THEME_COLOR = '#3394fd';
 
 export default class HomePage extends React.Component {
 
@@ -103,7 +107,7 @@ export default class HomePage extends React.Component {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                'authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwiaWF0IjoxNTY0NTU5NTczLCJpc3MiOiJ3d3cuY2xvdWRrZWVwZXIuY29tIiwic3ViIjoic2VydmljZUBjbG91ZGtlZXBlci5jbiIsImV4cCI6MTU2NDU5NTU3M30.-aDMcRBTNWR7KQfwK-bGemsq6DZrHVKNSQo54fhgoZI'
+                'authorization': token
             },
             body: JSON.stringify({})
         }).then((response) => response.json()).then((resJson) => {
@@ -125,8 +129,9 @@ export default class HomePage extends React.Component {
         let statusBar = {
             backgroundColor: THEME_COLOR,
             barStyle: 'light-content'
-        }
-        let navigationBar = <NavigationBar linerGradient={true} title={'首页'} statusBar={statusBar} style={{backgroundColor: THEME_COLOR}}></NavigationBar>
+        };
+        let navigationBar = <NavigationBar linerGradient={true} title='首页' statusBar={statusBar} style={{backgroundColor: THEME_COLOR}}/>;
+        NavigationUtils.navigation = this.props.navigation;
         return (
             <View style={{flex: 1, backgroundColor: 'rgb(245, 245, 249)'}}>
                 {navigationBar}

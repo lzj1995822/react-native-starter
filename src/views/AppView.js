@@ -13,26 +13,18 @@ import Calendar from "../modules/calendar/CalendarView";
 import Activity from './activity/Activity';
 import Login from './Login';
 import Cal from './cal/Cal';
-import { View } from "react-native";
+import {TouchableOpacity, View} from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
 import NavigationUtils from './navigation/NavigationUtils';
+import colors from '../styles/colors';
+import NavigationBar from "./navigation/NavigationBar";
 
-const stack = createStackNavigator({
+const THEME_COLOR = colors.THEME_COLOR;
+
+const welcome = createStackNavigator({
     WelcomePage: {
         screen: WelcomePage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    Activity: {
-        screen: Activity,
-        navigationOptions: {
-            headerTitle: '基本活动'
-        }
-    },
-    Login: {
-        screen: Login,
         navigationOptions: {
             header: null
         }
@@ -44,6 +36,51 @@ const stack = createStackNavigator({
 
     }
 });
+
+const stack = createStackNavigator({
+    Activity: {
+        screen: Activity,
+        navigationOptions: ({ navigation }) => ({
+            headerTitle: '活动管理',
+        })
+    },
+    Login: {
+        screen: Login,
+        navigationOptions: {
+            header: null
+        }
+    }
+},{
+    //默认导航配置
+    defaultNavigationOptions: ({ navigation }) => {
+        let statusBar = {
+            backgroundColor: colors.THEME_COLOR,
+            barStyle: 'light-content'
+        };
+        let title = '活动管理';
+        let routeName = navigation.state.routeName;
+        switch (routeName) {
+            case 'Activity':
+                title = '活动管理';
+                break;
+            default:
+                title = '未匹配到路由'
+        }
+        let leftButton = <TouchableOpacity onPress={() => {navigation.navigate('Main')}}>
+                            <AntDesign name='left' size={26} style={{color: 'white'}} />
+                        </TouchableOpacity>;
+        let navigationBar = <NavigationBar leftButton={leftButton} linerGradient={true} title={title} statusBar={statusBar} style={{backgroundColor: THEME_COLOR}}/>;
+        if (routeName === 'Login') {
+            navigationBar = null;
+        }
+        return {
+            header: (
+                navigationBar
+            )
+        }
+    }
+});
+
 const tab = createBottomTabNavigator({
     HomePage: {
         screen: HomePage,
@@ -103,9 +140,11 @@ const tab = createBottomTabNavigator({
 });
 
 export default createAppContainer(createSwitchNavigator({
+    Welcome: welcome,
     Init: stack,
     Main: tab,
 }, {
+    initialRouteName: 'Welcome',
     defaultNavigationOptions: {
         header: null
     }
