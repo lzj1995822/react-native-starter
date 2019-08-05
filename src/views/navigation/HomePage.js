@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, Button, TouchableOpacity, Image, ScrollView, Im
 import { Flex, Carousel, List, NoticeBar, SearchBar } from '@ant-design/react-native';
 import NavigationBar from '../navigation/NavigationBar';
 import NavigationUtils from '../navigation/NavigationUtils';
+import token from '../token';
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -11,7 +12,6 @@ import style from '../styles/common';
 import color from '../styles/color';
 const THEME_COLOR = color.THEME_COLOR;
 
-const token = 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhZDFmMDdmYy1iZWIzLTQxZWQtODE3My0xNTE0Y2E0NjkxYWIiLCJpYXQiOjE1NjQ2Mzk5NTIsImlzcyI6Ind3dy5jbG91ZGtlZXBlci5jb20iLCJzdWIiOiJzZXJ2aWNlQGNsb3Vka2VlcGVyLmNuIiwiZXhwIjoxNTY0Njc1OTUyfQ.OlesT7tsJEcgpcGuzVArEpOO6r42dsSlePG9nunmt3k';
 const styleScope = StyleSheet.create({
     listImage: {
         width: 50,
