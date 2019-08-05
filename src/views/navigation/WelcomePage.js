@@ -5,7 +5,7 @@ export default class WelcomePage extends React.Component {
     componentDidMount() {
         this.timer = setTimeout(() => {
             const { navigation } = this.props;
-            navigation.navigate("Main");
+            navigation.navigate("Login");
             clearTimeout(this.timer);
         }, 1000)
     }
