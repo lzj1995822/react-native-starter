@@ -1,17 +1,19 @@
-type GetToken = {
-    value: String,
+import {object} from "prop-types";
+
+type GetUser = {
+    value: object,
 };
 
-export const initialState: GetToken = {
-    value: '',
+export const initialState: GetUser = {
+    value: {},
 };
 
-export default function GetTokenReducer(
-    state: GetToken = initialState,
+export default function GetUserReducer(
+    state: GetUser = initialState,
     action
-): GetToken  {
+): GetUser  {
     switch (action.type) {
-        case 'SET_TOKEN':
+        case 'SET_USER':
             return Object.assign({}, state, {
                 value: action.value,
             });

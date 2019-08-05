@@ -50,8 +50,6 @@ export default class Login extends React.Component {
         this.setState({ modalVisible: visible });
     }
 
-
-
     submit() {
         let url = "http://122.97.218.162:21018/api/identity/sysUser/login"
         fetch(url, {
@@ -68,6 +66,10 @@ export default class Login extends React.Component {
                 this.redux.dispatch({
                     type: 'SET_TOKEN',
                     value: resJson.content.token
+                })
+                this.redux.dispatch({
+                    type: 'SET_USER',
+                    value: resJson.content.user
                 })
                 this.setState({showMessage:'登陆成功'})
                 this.setModalVisible(true)
