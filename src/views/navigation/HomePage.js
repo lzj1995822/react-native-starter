@@ -10,6 +10,7 @@ const Brief = Item.Brief;
 
 import style from '../styles/common';
 import color from '../styles/color';
+import {store} from "../../redux/store";
 const THEME_COLOR = color.THEME_COLOR;
 
 const styleScope = StyleSheet.create({
@@ -102,12 +103,14 @@ export default class HomePage extends React.Component {
     }
     fetchNotice() {
         let url = 'http://122.97.218.162:21018/api/identity/information/page?page=0&size=1&sort=createdAt,desc';
+        let tokenNew =  store.getState().token.value
+        console.log(store.getState())
         return fetch(url, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                'authorization': token
+                'authorization': tokenNew
             },
             body: JSON.stringify({})
         }).then((response) => response.json()).then((resJson) => {
@@ -205,7 +208,7 @@ export default class HomePage extends React.Component {
                                 <Text style={styleScope.btnLabel}>通知公告</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("Activity")}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("ScoreRank")}>
                             <View style={{textAlign: 'center'}}>
                                 <Image source={require('../../../assets/images/background.png')} style={styleScope.listImage}/>
                                 <Text style={styleScope.btnLabel}>积分排名</Text>
