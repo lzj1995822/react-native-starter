@@ -8,6 +8,7 @@ import Flex from "@ant-design/react-native/es/flex/Flex";
 import {Progress} from "@ant-design/react-native";
 import color from '../styles/color';
 import NavigationBar from "../navigation/NavigationBar";
+import { store } from '../../redux/store';
 const THEME_COLOR = color.THEME_COLOR;
 const styles = StyleSheet.create({
     activityItem: {
@@ -42,7 +43,7 @@ export default class ActingActivity extends React.Component {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                'authorization': token
+                'authorization': store.getState().token.value
             },
             body: JSON.stringify(params)
         }).then((res) => res.json()).then(res => {
