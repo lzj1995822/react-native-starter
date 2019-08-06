@@ -207,18 +207,18 @@ export default class Mine extends React.Component {
                 {navigationBar}
                 <ImageBackground
                     source={require('../../../assets/images/mine_bg.png')}
-                    style={{height: 300, width: '100%',alignItems: 'center',justifyContent: 'center'}}
+                    style={{height: 250, width: '100%',alignItems: 'center',justifyContent: 'center'}}
                     resizeMode="cover"
                 >
                     <Flex direction='row'  align='stretch' style={{alignItems: 'center',paddingBottom:50}}>
                         <View style={{flex: 0.33,alignItems: 'flex-end'}}>
                             <Image source={require('../../../assets/images/dq.png')} style={styles.avator}/>
                         </View>
-                        <View style={{marginLeft: 40,flex: 0.66}}>
+                        <View style={{marginLeft: 20,flex: 0.66}}>
                             <Flex>
                                  <Text style={styles.userName}>{this.state.user.name}</Text>
                                 {/*<View style={{borderColor: 'blue',display: 'inline-block'}}>*/}
-                                <Tag textStyle={{color: '#fff'}} style={{backgroundColor: '#67c23a', height: 22, marginTop: 28, marginLeft:10, borderColor: '#67c23a'}}>{this.state.user.roleName}</Tag>
+                                <Tag textStyle={{color: '#fff'}} style={{backgroundColor: '#67c23a', height: 22, marginTop: 28, marginLeft:10, borderColor: '#67c23a'}}>{this.state.user.roleName.replace(/角色/g, '')}</Tag>
                                 {/*</View>*/}
                             </Flex>
                             <Flex style={{height: 35}} align='end'>
@@ -233,7 +233,7 @@ export default class Mine extends React.Component {
                                     size={18}
                                     name={'clockcircleo'}
                                 />
-                                <Text style={styles.latestLoginTime}> 最近登录于{this.state.user.lastTime.replace(/T/g, "")}</Text>
+                                <Text style={styles.latestLoginTime}> 最近登录{new Date(this.state.user.lastTime).toLocaleString()}</Text>
                             </Flex>
                         </View>
                     </Flex>

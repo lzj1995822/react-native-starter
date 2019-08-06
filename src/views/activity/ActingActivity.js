@@ -9,6 +9,7 @@ import color from '../styles/color';
 import NavigationBar from "../navigation/NavigationBar";
 import { store } from '../../redux/store';
 import * as ProgressUI from 'react-native-progress';
+import {Card as Shadow} from 'react-native-shadow-cards';
 const THEME_COLOR = color.THEME_COLOR;
 const styles = StyleSheet.create({
     activityItem: {
@@ -17,14 +18,15 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: '#d0d0d0',
         width: '100%',
-        padding: 8,
+        padding: 15,
         overflow: 'hidden'
     },
     itemLabel: {
         fontWeight: '400',
         fontSize: 16,
         color: '#444',
-        width: 200
+        width: 200,
+        textAlignVertical: 'top'
     },
     itemValue: {
         color: '#265498',
@@ -108,10 +110,10 @@ export default class ActingActivity extends React.Component {
         return (
                 <View style={styles.activityItem} key={item.id}>
                     <TouchableOpacity onPress={() => {this.showModal(item)}}>
-                        <WingBlank size="lg">
-                            <Card style={{marginTop: 15, marginBottom: 15, fontSize: 14}} >
+                        <Shadow cornerRadius={7} opacity={0.3} elevation={5} style={{flex: 1,margin: 20, fontSize: 14}} >
+                            <Card>
                                 <Card.Header
-                                    title={item.title}
+                                  title={<Text style={{fontSize: 14}}>{item.title}</Text>}
                                     thumb={<Image source={logo} style={{marginLeft: -8,marginRight: 6}}/>}
                                     extra={<Flex justify="end">
                                         <AntDesign name='calendar' size={18}/>
@@ -119,11 +121,11 @@ export default class ActingActivity extends React.Component {
                                     </Flex>}
                                 />
                                 <Card.Body>
-                                    <Text style={{paddingTop: 10,paddingLeft: 15, paddingRight: 15}}>{item.context || "暂无内容"}</Text>
+                                    <Text style={{paddingLeft: 15, paddingRight: 15, lineHeight: 26}}>{item.context || "暂无内容"}</Text>
                                 </Card.Body>
                                 <Card.Footer content={this.renderItemFooter(item)} extra=""/>
                             </Card>
-                        </WingBlank>
+                        </Shadow>
                     </TouchableOpacity>
                 </View>
         )
@@ -180,7 +182,7 @@ export default class ActingActivity extends React.Component {
                 return (
                     <Flex justify='between' style={styles.formItem}>
                         <Text style={styles.itemLabel}>{item.districtName}</Text>
-                        <Text style={{backgroundColor: color, fontSize: 14, height: 25, padding: 4,borderRadius: 3, borderColor: color, color: '#fff'}}>{label}</Text>
+                        <Text style={{backgroundColor: color, fontSize: 14, height: 25, padding: 4,borderRadius: 5, borderColor: color, color: '#fff'}}>{label}</Text>
                     </Flex>
                 )
             });
@@ -188,7 +190,7 @@ export default class ActingActivity extends React.Component {
                 <Flex justify='between' style={styles.formItem}>
                     <Text style={styles.itemLabel}>本镇总进度</Text>
                     <Flex>
-                        <ProgressUI.Bar progress={Number(this.state.currentRow[percentKey])} />
+                        <ProgressUI.Bar style={{width: 100}} progress={Number(this.state.currentRow[percentKey])} />
                         <Text style={styles.itemValue}>{Math.round(this.state.currentRow[percentKey] * 1000)/10 + '%'}</Text>
                     </Flex>
                 </Flex>,
@@ -199,77 +201,77 @@ export default class ActingActivity extends React.Component {
                <Flex justify='between' style={styles.formItem}>
                     <Text style={styles.itemLabel}>全市总进度</Text>
                     <Flex>
-                        <ProgressUI.Bar progress={Number(this.state.currentRow.totalPercent)} />
+                        <ProgressUI.Bar style={{width: 100}} progress={Number(this.state.currentRow.totalPercent)} />
                         <Text style={styles.itemValue}>{Math.round(this.state.currentRow.totalPercent * 1000)/10 + '%'}</Text>
                     </Flex>
                 </Flex>,
                 <Flex justify='between' style={styles.formItem}>
                     <Text style={styles.itemLabel}>宝华镇</Text>
                     <Flex>
-                        <ProgressUI.Bar showsText={true} progress={Number(this.state.currentRow.baoHuaPercent)}/>
+                        <ProgressUI.Bar style={{width: 100}} showsText={true} progress={Number(this.state.currentRow.baoHuaPercent)}/>
                         <Text style={styles.itemValue}>{Math.round(this.state.currentRow.baoHuaPercent * 1000)/10 + '%'}</Text>
                     </Flex>
                 </Flex>,
                 <Flex justify='between' style={styles.formItem}>
                     <Text style={styles.itemLabel}>下蜀镇</Text>
                     <Flex>
-                        <ProgressUI.Bar showsText={true} progress={Number(this.state.currentRow.xiaShuPercent)}/>
+                        <ProgressUI.Bar style={{width: 100}} showsText={true} progress={Number(this.state.currentRow.xiaShuPercent)}/>
                         <Text style={styles.itemValue}>{Math.round(this.state.currentRow.xiaShuPercent * 1000)/10 + '%'}</Text>
                     </Flex>
                 </Flex>,
                 <Flex justify='between' style={styles.formItem}>
                     <Text style={styles.itemLabel}>茅山镇</Text>
                     <Flex>
-                        <ProgressUI.Bar showsText={true} progress={Number(this.state.currentRow.maoShanPercent)}/>
+                        <ProgressUI.Bar style={{width: 100}} showsText={true} progress={Number(this.state.currentRow.maoShanPercent)}/>
                         <Text style={styles.itemValue}>{Math.round(this.state.currentRow.maoShanPercent * 1000)/10 + '%'}</Text>
                     </Flex>
                 </Flex>,
                 <Flex justify='between' style={styles.formItem}>
                     <Text style={styles.itemLabel}>茅山风景区</Text>
                     <Flex>
-                        <ProgressUI.Bar showsText={true} progress={Number(this.state.currentRow.maoShanFengJingPercent)}/>
+                        <ProgressUI.Bar style={{width: 100}} showsText={true} progress={Number(this.state.currentRow.maoShanFengJingPercent)}/>
                         <Text style={styles.itemValue}>{Math.round(this.state.currentRow.maoShanFengJingPercent * 1000)/10 + '%'}</Text>
                     </Flex>
                 </Flex>,
                 <Flex justify='between' style={styles.formItem}>
                     <Text style={styles.itemLabel}>华阳街道</Text>
                     <Flex>
-                        <ProgressUI.Bar showsText={true} progress={Number(this.state.currentRow.huaYangPercent)}/>
+                        <ProgressUI.Bar style={{width: 100}} showsText={true} progress={Number(this.state.currentRow.huaYangPercent)}/>
                         <Text style={styles.itemValue}>{Math.round(this.state.currentRow.huaYangPercent * 1000)/10 + '%'}</Text>
                     </Flex>
                 </Flex>,
                 <Flex justify='between' style={styles.formItem}>
                     <Text style={styles.itemLabel}>郭庄镇</Text>
                     <Flex>
-                        <ProgressUI.Bar showsText={true} progress={Number(this.state.currentRow.guoZhuangPercent)}/>
+                        <ProgressUI.Bar style={{width: 100}} showsText={true} progress={Number(this.state.currentRow.guoZhuangPercent)}/>
                         <Text style={styles.itemValue}>{Math.round(this.state.currentRow.guoZhuangPercent * 1000)/10 + '%'}</Text>
                     </Flex>
                 </Flex>,
                 <Flex justify='between' style={styles.formItem}>
                     <Text style={styles.itemLabel}>边城镇</Text>
                     <Flex>
-                        <ProgressUI.Bar showsText={true} progress={Number(this.state.currentRow.bianChengPercent)}/>
+                        <ProgressUI.Bar style={{width: 100}} showsText={true} progress={Number(this.state.currentRow.bianChengPercent)}/>
                         <Text style={styles.itemValue}>{Math.round(this.state.currentRow.bianChengPercent * 1000)/10 + '%'}</Text>
                     </Flex>
                 </Flex>,
                 <Flex justify='between' style={styles.formItem}>
                     <Text style={styles.itemLabel}>开发区</Text>
                     <Flex>
-                        <ProgressUI.Bar showsText={true} progress={Number(this.state.currentRow.kaiFaPercent)}/>
+                        <ProgressUI.Bar style={{width: 100}} showsText={true} progress={Number(this.state.currentRow.kaiFaPercent)}/>
                         <Text style={styles.itemValue}>{Math.round(this.state.currentRow.kaiFaPercent * 1000)/10 + '%'}</Text>
                     </Flex>
                 </Flex>,
                 <Flex justify='between' style={styles.formItem}>
                      <Text style={styles.itemLabel}>白兔镇</Text>
                     <Flex>
-                        <ProgressUI.Bar showsText={true} progress={Number(this.state.currentRow.baiTuPercent)}/>
+                        <ProgressUI.Bar style={{width: 100}} showsText={true} progress={Number(this.state.currentRow.baiTuPercent)}/>
                         <Text style={styles.itemValue}>{Math.round(this.state.currentRow.baiTuPercent * 1000)/10 + '%'}</Text>
                     </Flex>
                 </Flex>,
                 <Flex justify='between' style={styles.formItem}>
                     <Text style={styles.itemLabel}>后白镇</Text>
                     <Flex>
-                        <ProgressUI.Bar showsText={true} progress={Number(this.state.currentRow.houBaiPercent)}/>
+                        <ProgressUI.Bar style={{width: 100}} showsText={true} progress={Number(this.state.currentRow.houBaiPercent)}/>
                         <Text style={styles.itemValue}>{Math.round(this.state.currentRow.houBaiPercent * 1000)/10 + '%'}</Text>
                     </Flex>
                 </Flex>
@@ -324,7 +326,7 @@ export default class ActingActivity extends React.Component {
                     </Flex>
                     <Flex justify='between' style={styles.formItem}>
                         <Text style={styles.itemLabel}>工作要求</Text>
-                        <Text style={{width: 270,paddingRight:16,textAlign: 'right'}} numberOfLines={2}>{this.state.currentRow.context}</Text>
+                        <Text style={{lineHeight: 20, width: 150}} numberOfLines={3}>{this.state.currentRow.context}</Text>
                     </Flex>
                      {this.renderProgress()}
                 </Flex>
@@ -364,7 +366,7 @@ export default class ActingActivity extends React.Component {
                     <View style={{ marginRight: 10, height: 4, flex: 1 }}>
                         <Progress percent={Math.round(Number(item[percentKey]) * 1000)/10} />
                     </View>
-                    <Text style={{width: 40}}>{Math.round(Number(item[percentKey]) * 1000)/10}%</Text>
+                    <Text style={{width: 45}}>{Math.round(Number(item[percentKey]) * 1000)/10}%</Text>
                 </Flex>
             )
         }
