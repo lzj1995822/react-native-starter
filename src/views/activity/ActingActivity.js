@@ -1,6 +1,5 @@
 import React from 'react';
 import {FlatList, ScrollView, Text, View, StyleSheet, Image, TouchableOpacity, Modal, Button} from "react-native";
-import token from '../token';
 import Card from "@ant-design/react-native/es/card/index";
 import WingBlank from "@ant-design/react-native/es/wing-blank/index";
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -10,14 +9,13 @@ import color from '../styles/color';
 import NavigationBar from "../navigation/NavigationBar";
 import { store } from '../../redux/store';
 import * as ProgressUI from 'react-native-progress';
-import Tag from "@ant-design/react-native/es/tag/index";
 const THEME_COLOR = color.THEME_COLOR;
 const styles = StyleSheet.create({
     activityItem: {
     },
     formItem: {
         borderBottomWidth: 1,
-        borderColor: '#b3b3b3',
+        borderColor: '#d0d0d0',
         width: '100%',
         padding: 8,
         overflow: 'hidden'
@@ -69,15 +67,20 @@ export default class ActingActivity extends React.Component {
         this.showModal.bind(this);
         this.fetchDetailProgress.bind(this);
         this.renderProgress.bind(this);
+        this.renderItemFooter.bind(this);
     }
     componentDidMount() {
         this.fetchActivityData();
     }
     fetchActivityData() {
-        let url = `http://122.97.218.162:21018/api/identity/parActivity/page?page=${this.page - 1}&size= ${this.size}`;
+        let isCountrySide = this.state.user.roleCode === 'COUNTRY_SIDE_ACTOR';
+        let url = `http://122.97.218.162:21018/api/identity/${isCountrySide ? 'parActivityObject' : 'parActivity'}/page?page=${this.page - 1}&size= ${this.size}`;
         let params = {
-            currentStatus: "ACTIVE"
+            currentStatus: "ACTIVE",
         };
+        if (isCountrySide) {
+            params.organizationId = this.state.user.sysDistrict.districtId
+        }
         fetch(url, {
             method: 'POST',
             headers: {
@@ -87,7 +90,6 @@ export default class ActingActivity extends React.Component {
             },
             body: JSON.stringify(params)
         }).then((res) => res.json()).then(res => {
-            console.log("footer");
             this.setState({
                 activityList: this.state.activityList.concat(res.content.content),
                 totalPage: res.content.totalPages,
@@ -103,10 +105,6 @@ export default class ActingActivity extends React.Component {
     }
     renderItem = (item) => {
         let logo = item.taskType === 'Party' ? require('../../../assets/images/party-logo.png') : require('../../../assets/images/learning-logo.png');
-        let percentKey = 'totalPercent';
-        if (this.state.user.roleCode === 'TOWN_REVIEWER') {
-            percentKey = this.TownCodeKey[this.state.user.sysDistrict.districtId];
-        }
         return (
                 <View style={styles.activityItem} key={item.id}>
                     <TouchableOpacity onPress={() => {this.showModal(item)}}>
@@ -123,17 +121,7 @@ export default class ActingActivity extends React.Component {
                                 <Card.Body>
                                     <Text style={{paddingTop: 10,paddingLeft: 15, paddingRight: 15}}>{item.context || "暂无内容"}</Text>
                                 </Card.Body>
-                                <Card.Footer
-                                    content={
-                                        <Flex>
-                                            <View style={{ marginRight: 10, height: 4, flex: 1 }}>
-                                                <Progress percent={Math.round(Number(item[percentKey]) * 1000)/10} />
-                                            </View>
-                                            <Text style={{width: 40}}>{Math.round(Number(item[percentKey]) * 1000)/10}%</Text>
-                                        </Flex>
-                                    }
-                                    extra=""
-                                />
+                                <Card.Footer content={this.renderItemFooter(item)} extra=""/>
                             </Card>
                         </WingBlank>
                     </TouchableOpacity>
@@ -192,7 +180,7 @@ export default class ActingActivity extends React.Component {
                 return (
                     <Flex justify='between' style={styles.formItem}>
                         <Text style={styles.itemLabel}>{item.districtName}</Text>
-                        <Text style={{backgroundColor: color, fontSize: 14, height: 24, padding: 4, borderColor: color, color: '#fff'}}>{label}</Text>
+                        <Text style={{backgroundColor: color, fontSize: 14, height: 25, padding: 4,borderRadius: 3, borderColor: color, color: '#fff'}}>{label}</Text>
                     </Flex>
                 )
             });
@@ -344,6 +332,42 @@ export default class ActingActivity extends React.Component {
                 </ScrollView>
             </Modal>
         )
+    }
+    renderItemFooter(item) {
+        let percentKey = 'totalPercent';
+        if (this.state.user.roleCode === 'TOWN_REVIEWER') {
+            percentKey = this.TownCodeKey[this.state.user.sysDistrict.districtId];
+        }
+        if (this.state.user.roleCode === 'COUNTRY_SIDE_ACTOR') {
+            let color;
+            let label;
+            if (item.status == 2) {
+                color = '#67c23a';
+                label = '已完成'
+            } else if (item.status == 1) {
+                color = '#fdca34';
+                label = '待审核'
+            } else {
+                color = '#c22120';
+                label = '未完成'
+            }
+            return (
+                <Flex justify='between'>
+                    <Text style={{backgroundColor: color, fontSize: 14, height: 28, padding: 6, borderRadius: 3, borderColor: color, color: '#fff'}}>{label}</Text>
+                    <Button title={'执行'} />
+                </Flex>
+            )
+
+        } else {
+            return (
+                <Flex>
+                    <View style={{ marginRight: 10, height: 4, flex: 1 }}>
+                        <Progress percent={Math.round(Number(item[percentKey]) * 1000)/10} />
+                    </View>
+                    <Text style={{width: 40}}>{Math.round(Number(item[percentKey]) * 1000)/10}%</Text>
+                </Flex>
+            )
+        }
     }
     render() {
         return (
