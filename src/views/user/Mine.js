@@ -256,7 +256,7 @@ export default class Mine extends React.Component {
                         <Text>关于句容党建</Text>
                     </Item>
                 </List>
-                <Button style={{marginRight: 10,marginLeft:10 }} onPress={() => { this.logout();}}>退出</Button>
+                <Button style={{marginRight: 10,marginLeft:10 ,marginTop:30}} onPress={() => { this.logout();}}>退出</Button>
                 <Modal animationType="slide" transparent={false} visible={this.state.pswModalVisible} onRequestClose={() => {alert("Modal has been closed.");}}>
                     {pswNavigationBar}
                     <InputItem clear type="password" value={this.state.password} placeholder="请输入密码"
