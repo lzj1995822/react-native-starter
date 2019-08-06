@@ -53,7 +53,6 @@ export default class ActingActivity extends React.Component {
                 totalPage: res.content.totalPages,
             })
         })
-        https://blog.csdn.net/qq_39635302/article/details/84876699
     }
     showModal(item) {
         console.log("modal");
