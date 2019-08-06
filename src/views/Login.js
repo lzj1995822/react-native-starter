@@ -36,7 +36,7 @@ export default class Login extends React.Component {
         this.redux = store;
         this.state = {
             name: '',
-            password:'',
+            password: '',
             modalVisible: false,
             showMessage:'登陆成功',
             token:''
@@ -51,7 +51,7 @@ export default class Login extends React.Component {
     }
 
     submit() {
-        let url = "http://122.97.218.162:21018/api/identity/sysUser/login"
+        let url = "http://122.97.218.162:21018/api/identity/sysUser/login";
         fetch(url, {
             method: 'POST',
             headers: {
@@ -60,7 +60,9 @@ export default class Login extends React.Component {
             },
             body: JSON.stringify({
                 userName: this.state.name,
-                password: this.state.password})
+                password: this.state.password,
+                isMobile: 1,
+            })
         }).then((response) => response.json()).then((resJson) => {
             if(resJson.code == 200){
                 this.redux.dispatch({
