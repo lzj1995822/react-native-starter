@@ -76,14 +76,14 @@ export default class HomePage extends React.Component {
         this.fetchNotice = this.fetchNotice.bind(this);
     }
     componentDidMount() {
-        this.fetchPartyBuild().then((news) => {
-            this.fetchNotice().then((notice) => {
-                this.setState({
-                    partyBuildNews: news,
-                    notice: notice
-                })
-            })
-        })
+        // this.fetchPartyBuild().then((news) => {
+        //     this.fetchNotice().then((notice) => {
+        //         this.setState({
+        //             partyBuildNews: news,
+        //             notice: notice
+        //         })
+        //     })
+        // })
     }
     fetchPartyBuild() {
         let url = 'http://www.jrxf.gov.cn/wz/getWz';
@@ -104,7 +104,6 @@ export default class HomePage extends React.Component {
     fetchNotice() {
         let url = 'http://122.97.218.162:21018/api/identity/information/page?page=0&size=1&sort=createdAt,desc';
         let tokenNew =  store.getState().token.value
-        console.log(store.getState())
         return fetch(url, {
             method: 'POST',
             headers: {
