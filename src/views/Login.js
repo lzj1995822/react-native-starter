@@ -36,7 +36,7 @@ export default class Login extends React.Component {
         this.redux = store;
         this.state = {
             name: '',
-            password:'',
+            password: '',
             modalVisible: false,
             showMessage:'登陆成功',
             token:''
