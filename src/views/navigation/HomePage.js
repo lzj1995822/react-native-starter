@@ -4,14 +4,15 @@ import { StyleSheet, View, Text, Button, TouchableOpacity, Image, ScrollView, Im
 import { Flex, Carousel, List, NoticeBar, SearchBar } from '@ant-design/react-native';
 import NavigationBar from '../navigation/NavigationBar';
 import NavigationUtils from '../navigation/NavigationUtils';
+import token from '../token';
 const Item = List.Item;
 const Brief = Item.Brief;
 
 import style from '../styles/common';
 import color from '../styles/color';
+import {store} from "../../redux/store";
 const THEME_COLOR = color.THEME_COLOR;
 
-const token = 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhZDFmMDdmYy1iZWIzLTQxZWQtODE3My0xNTE0Y2E0NjkxYWIiLCJpYXQiOjE1NjQ3MTMxNjMsImlzcyI6Ind3dy5jbG91ZGtlZXBlci5jb20iLCJzdWIiOiJzZXJ2aWNlQGNsb3Vka2VlcGVyLmNuIiwiZXhwIjoxNTY0NzQ5MTYzfQ.aKn_rXm6PEiCY7nP0S9fnchXtTfUgLuopKPXqY_hZbU';
 const styleScope = StyleSheet.create({
     listImage: {
         width: 50,
@@ -102,12 +103,14 @@ export default class HomePage extends React.Component {
     }
     fetchNotice() {
         let url = 'http://122.97.218.162:21018/api/identity/information/page?page=0&size=1&sort=createdAt,desc';
+        let tokenNew =  store.getState().token.value
+        console.log(store.getState())
         return fetch(url, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                'authorization': token
+                'authorization': tokenNew
             },
             body: JSON.stringify({})
         }).then((response) => response.json()).then((resJson) => {
@@ -205,7 +208,7 @@ export default class HomePage extends React.Component {
                                 <Text style={styleScope.btnLabel}>通知公告</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("Activity")}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("ScoreRank")}>
                             <View style={{textAlign: 'center'}}>
                                 <Image source={require('../../../assets/images/background.png')} style={styleScope.listImage}/>
                                 <Text style={styleScope.btnLabel}>积分排名</Text>

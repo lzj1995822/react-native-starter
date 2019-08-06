@@ -11,6 +11,7 @@ import {
 import Mine from "./user/Mine";
 import Calendar from "../modules/calendar/CalendarView";
 import Activity from './activity/Activity';
+import ScoreRank from './score/ScoreRank';
 import Login from './Login';
 import Cal from './cal/Cal';
 import {TouchableOpacity, View} from "react-native";
@@ -42,6 +43,12 @@ const stack = createStackNavigator({
         screen: Activity,
         navigationOptions: ({ navigation }) => ({
             headerTitle: '活动管理',
+        })
+    },
+    ScoreRank: {
+        screen: ScoreRank,
+        navigationOptions: ({ navigation }) => ({
+            headerTitle: '积分排名',
         })
     },
     Login: {
