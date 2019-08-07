@@ -11,7 +11,6 @@ import { store } from '../../redux/store';
 import * as ProgressUI from 'react-native-progress';
 import {Card as Shadow} from 'react-native-shadow-cards';
 import Accordion from "@ant-design/react-native/es/accordion/index";
-import Camera from '../components/Camera';
 const THEME_COLOR = color.THEME_COLOR;
 const styles = StyleSheet.create({
     activityItem: {
@@ -315,8 +314,7 @@ export default class ActingActivity extends React.Component {
                     <Accordion onChange={this.onChange} activeSections={this.state.activeSections} >
                         {records}
                     </Accordion>
-                </View>,
-                    <Camera/>
+                </View>
                 ]
 
         }
