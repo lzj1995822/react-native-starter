@@ -10,6 +10,7 @@ import NavigationBar from "../navigation/NavigationBar";
 import { store } from '../../redux/store';
 import * as ProgressUI from 'react-native-progress';
 import {Card as Shadow} from 'react-native-shadow-cards';
+import Accordion from "@ant-design/react-native/es/accordion/index";
 const THEME_COLOR = color.THEME_COLOR;
 const styles = StyleSheet.create({
     activityItem: {
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
         width: 50,
         textAlign: 'right'
     }
-})
+});
 export default class ActingActivity extends React.Component {
     constructor() {
         super();
@@ -52,7 +53,7 @@ export default class ActingActivity extends React.Component {
             '0109': 'huaYangPercent',
             '0111': 'kaiFaPercent',
             '0112': 'maoShanFengJingPercent'
-        }
+        };
         this.state = {
             activityList: [],
             totalPage: 0,
@@ -60,8 +61,11 @@ export default class ActingActivity extends React.Component {
             currentRow: {
                 title: ''
             },
-            user:store.getState().user.value,
-            detailProgress: []
+            user: store.getState().user.value,
+            token: store.getState().token.value,
+            detailProgress: [],
+            phonePic: [],
+            activeSections: [0]
         };
         this.fetchActivityData.bind(this);
         this.onLoadMore.bind(this);
@@ -70,6 +74,11 @@ export default class ActingActivity extends React.Component {
         this.fetchDetailProgress.bind(this);
         this.renderProgress.bind(this);
         this.renderItemFooter.bind(this);
+        this.fetchPhonePic.bind(this);
+        this.onChange = activeSections => {
+            this.setState({ activeSections });
+        };
+        this.handlePhonePath.bind(this)
     }
     componentDidMount() {
         this.fetchActivityData();
@@ -88,7 +97,7 @@ export default class ActingActivity extends React.Component {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                'authorization': store.getState().token.value
+                'authorization': this.state.token
             },
             body: JSON.stringify(params)
         }).then((res) => res.json()).then(res => {
@@ -103,7 +112,14 @@ export default class ActingActivity extends React.Component {
             modalVis: true,
             currentRow: item
         });
-        this.fetchDetailProgress(item);
+        if (this.state.user.roleCode === 'TOWN_REVIEWER') {
+            this.fetchDetailProgress(item);
+        } else if (this.state.user.roleCode === 'COUNTRY_SIDE_ACTOR') {
+            this.setState({
+                phonePic: []
+            });
+            this.fetchPhonePic(item);
+        }
     }
     renderItem = (item) => {
         let logo = item.taskType === 'Party' ? require('../../../assets/images/party-logo.png') : require('../../../assets/images/learning-logo.png');
@@ -153,7 +169,7 @@ export default class ActingActivity extends React.Component {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                'authorization': store.getState().token.value
+                'authorization': this.state.token
             },
             body: JSON.stringify(params)
         }).then((res) => res.json()).then((resp) => {
@@ -196,8 +212,8 @@ export default class ActingActivity extends React.Component {
                 </Flex>,
                 temp
             ]
-        } else {
-           return [
+        } else if (this.state.user.roleCode == 'CITY_LEADER') {
+            return [
                <Flex justify='between' style={styles.formItem}>
                     <Text style={styles.itemLabel}>全市总进度</Text>
                     <Flex>
@@ -276,7 +292,67 @@ export default class ActingActivity extends React.Component {
                     </Flex>
                 </Flex>
                ]
+        } else {
+             let records = this.state.phonePic.map((item) => {
+                 let images = item.imageUrl.map(subItem => {
+                     console.log(this.handlePhonePath(subItem.imageUrl, item), 'de')
+                     return (<Image resizeMode='contain' style={{width: 150, height: 200, margin: 6}} source={{uri: this.handlePhonePath(subItem.imageUrl)}}/>)
+                 })
+                 console.log(item, 'images');
+                 return (
+                    <Accordion.Panel header={`执行记录(${item.time.replace(/T/g, ' ')})`}>
+                        <ScrollView horizontal={true}>
+                            <Flex style={{overflowX: 'scroll'}}>
+                                {images}
+                            </Flex>
+                        </ScrollView>
+                    </Accordion.Panel>
+                )
+            });
+            return  [
+                <View style={{width: '100%'}}>
+                    <Accordion onChange={this.onChange} activeSections={this.state.activeSections} >
+                        {records}
+                    </Accordion>
+                </View>
+                ]
+
         }
+    }
+    renderExcute() {
+
+    }
+    handlePhonePath(imgUrl) {
+        if (imgUrl.indexOf("http" )== -1) {
+            if (imgUrl[0] === '..') {
+                return `http://jrweixin.zj96296.com:18006/JRPartyService/Upload/PhotoTakeUpload/${imgUrl}`
+            } else {
+                return `http://jrweixin.zj96296.com:18006/JRPartyService/Upload/PhotoTake/${imgUrl}`;
+            }
+        }else {
+            return imgUrl
+        }
+    }
+    fetchPhonePic(item) {
+        let url = 'http://122.97.218.162:21018/api/identity/parActivityFeedback/phonePage?page=0&size=500&sort=time,desc';
+        let params = {
+            snId: item.activityId,
+            userId: this.state.user.sysDistrict.id
+        };
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'authorization': this.state.token
+            },
+            body: JSON.stringify(params)
+        }).then((res) => res.json()).then((resp) => {
+            this.setState({
+                phonePic: resp.content.content
+            });
+            return true;
+        })
     }
     renderModal() {
         let statusBar = {
@@ -288,7 +364,6 @@ export default class ActingActivity extends React.Component {
                 <AntDesign name='left' size={26} style={{color: 'white'}} />
             </TouchableOpacity>}
            linerGradient={true} title='活动详情' statusBar={statusBar} style={{backgroundColor: THEME_COLOR}}/>;
-           console.log(this.state.currentRow)
         return (
             <Modal
                 animationType={"slide"}
@@ -326,7 +401,7 @@ export default class ActingActivity extends React.Component {
                     </Flex>
                     <Flex justify='between' style={styles.formItem}>
                         <Text style={styles.itemLabel}>工作要求</Text>
-                        <Text style={{lineHeight: 20, width: 150}} numberOfLines={3}>{this.state.currentRow.context}</Text>
+                        <Text style={{lineHeight: 20, width: 150, textAlign: 'right'}} numberOfLines={3}>{this.state.currentRow.context}</Text>
                     </Flex>
                      {this.renderProgress()}
                 </Flex>
@@ -355,8 +430,17 @@ export default class ActingActivity extends React.Component {
             }
             return (
                 <Flex justify='between'>
-                    <Text style={{backgroundColor: color, fontSize: 14, height: 28, padding: 6, borderRadius: 3, borderColor: color, color: '#fff'}}>{label}</Text>
-                    <Button title={'执行'} />
+                    <Text style={{backgroundColor: color, fontSize: 14, height: 28, padding: 4, borderRadius: 3, borderColor: color, color: '#fff'}}>{label}</Text>
+                    { item.status != 2 && new Date(item.month).getTime() >= new Date().getTime() ?
+                    <Flex>
+                        <AntDesign name={'playcircleo'} size={18}  style={{color: '#268aff'}}/>
+                        <Text style={{color: '#268aff'}}> 执行</Text>
+                    </Flex> :
+                        <Flex>
+                            <AntDesign name={'filetext1'} size={18}  style={{color: '#268aff'}}/>
+                            <Text style={{color: '#268aff'}}> 详情</Text>
+                        </Flex>
+                    }
                 </Flex>
             )
 
