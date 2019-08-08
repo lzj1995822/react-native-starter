@@ -175,8 +175,42 @@ export default class ScoreRank extends React.Component {
     }
 
     renderHeadComp(){
-        return (<View style={{flex: 1, flexDirection: 'row'}}>
-
+        return (<View style={{ flex: 1,
+            flexDirection: 'row',
+            marginBottom: 5,
+            width:'98%',
+            marginLeft:'1%',}}>
+            <View style={{width: width*0.2, height: 50}} >
+                <Text style={{ fontSize: 25,
+                    textAlign:'center',
+                    alignItems:'center',
+                    justifyContent:'center',
+                    textAlignVertical:'center',
+                    fontWeight:"500",
+                    lineHeight:50
+                }}
+                      key="titileO">排名</Text>
+            </View>
+            <View style={{width: width*0.5, height: 50}} >
+                <Text style={{textAlign:'center',
+                    alignItems:'center',
+                    justifyContent:'center',
+                    textAlignVertical:'center',
+                    lineHeight:50,
+                    fontSize: 25,
+                    fontWeight:"500",
+                }} key="titileT">组织名</Text>
+            </View>
+            <View style={{width:  width*0.3, height: 50}} >
+                <Text style={{textAlign:'center',
+                    alignItems:'center',
+                    justifyContent:'center',
+                    textAlignVertical:'center',
+                    lineHeight:50,
+                    fontSize: 25,
+                    fontWeight:"500",
+                }}  key="titileTh">分数</Text>
+            </View>
 
         </View>)
     }
